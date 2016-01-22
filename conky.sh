@@ -1,2 +1,2 @@
-#! / bin / sh
-sleep 20 && conky
+#!/bin/bash
+sleep 15s && /usr/bin/conky
