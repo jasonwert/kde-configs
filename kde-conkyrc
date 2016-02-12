@@ -100,7 +100,7 @@ ${goto 40}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "h
 ${color7}${hr}${color}
 ${font Open Sans Light:size=15}System Info 
 ${color}${font Open Sans Light:pixelsize=10}USER: ${color1}${alignr}${exec whoami}
-${color}${font Open Sans Light:pixelsize=10}DISTRO:  ${color1}${alignr}Debian Testing
+${color}${font Open Sans Light:pixelsize=10}DISTRO:  ${color1}${alignr}${execi 60 lsb_release -d | cut -f 2| tr "[:upper:]" "[:lower:]"} 
 ${color}${font Open Sans Light:pixelsize=10}KERNEL: ${color1}${alignr}${kernel}
 ${color}${font Open Sans Light:pixelsize=10}ARCH: ${color1}${alignr}$machine
 ${color}${font Open Sans Light:pixelsize=10}BATTERY: ${color1}$alignr${battery_percent BAT0}%
