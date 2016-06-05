@@ -58,7 +58,7 @@ alignment top_left
 # Gap between borders of screen and text
 # same thing as passing -x at command line
 gap_x 10
-gap_y 50
+gap_y 40
 
 #	Distric-Thin			fonts
 #	Blue Highway
@@ -87,47 +87,86 @@ color5 CC0000
 color6 AAAAAA
 color7 484848
 
-TEXT
-${lua conky_draw_bg}${execi 300 curl -s "http://weather.yahooapis.com/forecastrss?p=49684&u=f" -o ~/.cache/weather.xml}${font Open Sans Light:size=13}${execi 300 grep "yweather:location" ~/.cache/weather.xml | grep -o "city=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}, ${execi 300 grep "yweather:location" ~/.cache/weather.xml | grep -o "region=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font}
-${font Open Sans Light:size=45}${alignr}${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}°${font}
-${lua conky_draw_bg}${execi 300 cp -f ~/.weathericons/$(grep "yweather:condition" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*").png ~/.cache/weather.png}${image ~/.cache/weather.png -p 0,45 -s 60x60}
-${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}
-${color6}${execi 300 grep "yweather:wind" ~/.cache/weather.xml | grep -o "speed=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${execi 300 grep "yweather:units" ~/.cache/weather.xml | grep -o "speed=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${color}
-${lua conky_draw_bg}${execi 300 cp -f ~/.weathericons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | head -n1).png ~/.cache/weather-today.png}${image ~/.cache/weather-today.png -p 0,175 -s 30x30}${execi 300 cp -f ~/.weathericons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tail -n1).png ~/.cache/weather-tomorrow.png}${image ~/.cache/weather-tomorrow.png -p 130,175 -s 30x30}
-${goto 40}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1' | tr '[a-z]' '[A-Z]'}${goto 170}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2' | tr '[a-z]' '[A-Z]'}
-${goto 40}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}° ${color6}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°${color}${goto 170}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}° ${color6}${execi 300 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°${color}${voffset 15}
 
+TEXT
+${execi 300 curl -s "http://api.openweathermap.org/data/2.5/forecast/daily?APPID=896c389cc3f57ea67040a689b2464d78&id=5012495&cnt=5&units=imperial" -o ~/.cache/forecast.json}\
+${execi 300 curl -s "api.openweathermap.org/data/2.5/weather?APPID=896c389cc3f57ea67040a689b2464d78&id=5012495&cnt=5&units=imperial" -o ~/.cache/weather.json}\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+
+${color1}${voffset 192}${alignc 77}${execi 300 LANG=en_US.UTF-8 LC_TIME=en_US.UTF-8 date +%^a}${color}
+${color1}${voffset -13}${alignc}${execi 300 LANG=en_US.UTF-8 LC_TIME=en_US.UTF-8 date -d +1day +%^a}${color}
+${color1}${voffset -13}${alignc -77}${execi 300 LANG=en_US.UTF-8 LC_TIME=en_US.UTF-8 date -d +2day +%^a}${color}
+\
+\
+\
+\
+\
+\
+${color1}${voffset 31}${alignc 72}${execi 300 jq -r .list[0].temp.min ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°/${execi 300 jq -r .list[0].temp.max ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°${color}
+${color1}${voffset -13}${alignc -3}${execi 300 jq -r .list[1].temp.min ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°/${execi 300 jq -r .list[1].temp.max ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°${color}
+${color1}${voffset -13}${alignc -77}${execi 300 jq -r .list[2].temp.min ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°/${execi 300 jq -r .list[2].temp.max ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°${color}
+\
+\
+\
+\
+${goto 30}${voffset -152}${font Droid Sans :size=36}${color}${execi 300 jq -r .main.temp ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num}°${font}${color}
+${goto 30}${voffset 7}${font Droid Sans :size=12}${color1}${execi 300 jq -r .weather[0].description ~/.cache/weather.json | sed "s|\<.|\U&|g"}${font}${color}
+${color1}${alignr 32}${voffset -83}${execi 300 jq -r .main.pressure ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num} hPa
+${color1}${alignr 32}${voffset 7}${execi 300 jq -r .main.humidity ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num} %${color}
+${color1}${alignr 32}${voffset 7}${execi 300 jq -r .wind.speed ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num} mi/h${color}
+\
+
+${voffset -170}${font Droid Sans Mono :size=32}${alignc}${color}${time %I:%M}${font}${color}
+${voffset 4}${font Droid Sans :size=18}${alignc}${color3}${execi 300 LANG=en_US.UTF-8 LC_TIME=en_US.UTF-8 date +"%a %B %-d, %Y"}${font}${color}
 ${color7}${hr}${color}
+${font Open Sans Light:size=15}Weather ${color}
+\
+${voffset 150}${color7}${hr}${color}
 ${font Open Sans Light:size=15}System Info 
-${color}${font Open Sans Light:pixelsize=10}USER: ${color1}${alignr}${exec whoami}
-${color}${font Open Sans Light:pixelsize=10}DISTRO:  ${color1}${alignr}${execi 60 lsb_release -d | cut -f 2| tr "[:upper:]" "[:lower:]"} 
-${color}${font Open Sans Light:pixelsize=10}KERNEL: ${color1}${alignr}${kernel}
-${color}${font Open Sans Light:pixelsize=10}ARCH: ${color1}${alignr}$machine
-${color}${font Open Sans Light:pixelsize=10}BATTERY: ${color1}$alignr${battery_percent BAT0}%
-${color}${font Open Sans Light:pixelsize=10}UPTIME: ${color1}${alignr}${uptime}
-${color}${font Open Sans Light:pixelsize=10}EXTERNAL IP: ${color1}${alignr}${execi 3600 wget -O - http://ip.tupeux.com | tail}
-${if_up eth0}${color}${font Open Sans Light:pixelsize=10}INTERNAL IP:${color1}${alignr}${addr eth0}${endif}${if_up wlan0}${color}${font Open Sans Light:pixelsize=10}INTERNAL IP:${color1}${alignr}${addr wlan0}${endif}
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}USER: ${color1}${alignr}${exec whoami}
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}DISTRO:  ${color1}${alignr}${exec lsb_release -d | cut -f 2| tr "[:upper:]" "[:lower:]"}
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}KERNEL: ${color1}${alignr}${kernel}
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}ARCH: ${color1}${alignr}$machine
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}BATTERY: ${color1}$alignr${battery_percent BAT0}%
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}UPTIME: ${color1}${alignr}${uptime}
+#${color}${font Open Sans Light:pixelsize=10}EXTERNAL IP: ${color1}${alignr}${execi 3600 wget -O - http://ip.tupeux.com | tail}
+${voffset 2}${if_up enp0s25}${color}${font Open Sans Light:pixelsize=10}INTERNAL IP:${color1}${alignr}${if_existing /proc/net/route wlp3s0}${addr wlp3s0}${else}${if_existing /proc/net/route enp0s25}${color1}${alignr}${addr enp0s25}${else}0.0.0.0${color}${endif}${endif}
 ${color7}${hr}${color}
 ${font Open Sans Light:size=15}Storage
-${color}${font Open Sans Light:pixelsize=10}/: ${color1}${alignc}${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
-${color}${font Open Sans Light:pixelsize=10}HOME: ${color1}${alignc}${fs_used /home} / ${fs_size /home} $alignr ${fs_used_perc /home}%
-${color}${font Open Sans Light:pixelsize=10}Home2: ${color1}${alignc}${fs_used /media/home2} / ${fs_size /media/home2} $alignr ${fs_used_perc /media/home2}%
-#${color}${font Open Sans Light:pixelsize=10}UNRAID: ${color1}${alignc}${fs_used /run/user/1000/gvfs/smb-share:server=192.168.0.150,share=jasonwert/} / ${fs_size /run/user/1000/gvfs/smb-share:server=192.168.0.150,share=jasonwert/} $alignr ${fs_used_perc /run/user/1000/gvfs/smb-share:server=192.168.0.150,share=jasonwert/}%
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}/: ${color1}${alignc}${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}HOME: ${color1}${alignc}${fs_used /home} / ${fs_size /home} $alignr ${fs_used_perc /home}%
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}Home2: ${color1}${alignc}${fs_used /media/home2} / ${fs_size /media/home2} $alignr ${fs_used_perc /media/home2}%
+#${color}${font Open Sans Light:pixelsize=10}UNRAID: ${color1}${alignc}${fs_used /media/jasonwert/} / ${fs_size /media/jasonwert/} $alignr ${fs_used_perc /media/jasonwert/}%
 ${color7}${hr}${color}
 ${font Open Sans Light:size=15}CPUs/Memory
-${color}${font Open Sans Light:pixelsize=10}CPU 1: ${color1}${alignc}${freq_g 0} ${color1}Ghz ${color2}${alignr}${cpu cpu0}${color1}%
-${color}${font Open Sans Light:pixelsize=10}CPU 2: ${color1}${alignc}${freq_g 1} ${color1}Ghz ${color2}${alignr}${cpu cpu1}${color1}%
-${color}${font Open Sans Light:pixelsize=10}CPU 3: ${color1}${alignc}${freq_g 2} ${color1}Ghz ${color2}${alignr}${cpu cpu2}${color1}%
-${color}${font Open Sans Light:pixelsize=10}CPU 4: ${color1}${alignc}${freq_g 3} ${color1}Ghz ${color2}${alignr}${cpu cpu3}${color1}%
-${color}${font Open Sans Light:pixelsize=10}CPU TEMP: ${color1}${alignr}${hwmon temp 1}°C
-${alignr}${loadgraph 25,250 FF8800 FF8800 -l}
-${color}${font Open Sans Light:pixelsize=10}RAM: ${color3}${alignr}${mem}
-${color}${font Open Sans Light:pixelsize=10}TOTAL: ${color3}${alignr}${memmax}
-#${alignr}${memgraph 20,250 FF8800 FF8800 -l}
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 1: ${color1}${alignc}${freq_g 0} ${color1}Ghz ${color2}${alignr}${cpu cpu0}${color1}%
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 2: ${color1}${alignc}${freq_g 1} ${color1}Ghz ${color2}${alignr}${cpu cpu1}${color1}%
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 3: ${color1}${alignc}${freq_g 2} ${color1}Ghz ${color2}${alignr}${cpu cpu2}${color1}%
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 4: ${color1}${alignc}${freq_g 3} ${color1}Ghz ${color2}${alignr}${cpu cpu3}${color1}%
+${voffset 5}${alignc}${cpubar 10,180 FF8800 FF8800 -l}
+${voffset 5}${color}${font Open Sans Light:pixelsize=10}CPU TEMP: ${color1}${alignr}${hwmon temp 1}°C
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}RAM: ${color3}${alignr}${mem}
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}TOTAL: ${color3}${alignr}${memmax}
+${voffset 5}${alignc}${membar 10,180 FF8800 FF8800 -l}
 ${color7}${hr}${color}
 ${font Open Sans Light:size=15}Top Processes
-${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 1}${color1}${alignr +10}${top_mem mem_res 1}${color2}${alignr}${top_mem mem 1}${color1} %
-${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 2}${color1}${alignr +10}${top_mem mem_res 2}${color2}${alignr}${top_mem mem 2}${color1} %
-${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 3}${color1}${alignr +10}${top_mem mem_res 3}${color2}${alignr}${top_mem mem 3}${color1} %
-${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 4}${color1}${alignr +10}${top_mem mem_res 4}${color2}${alignr}${top_mem mem 4}${color1} %
-${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 5}${color1}${alignr +10}${top_mem mem_res 5}${color2}${alignr}${top_mem mem 5}${color1} %
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 1}${color1}${alignr +10}${top_mem mem_res 1}${color2}${alignr}${top_mem mem 1}${color1} %
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 2}${color1}${alignr +10}${top_mem mem_res 2}${color2}${alignr}${top_mem mem 2}${color1} %
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 3}${color1}${alignr +10}${top_mem mem_res 3}${color2}${alignr}${top_mem mem 3}${color1} %
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 4}${color1}${alignr +10}${top_mem mem_res 4}${color2}${alignr}${top_mem mem 4}${color1} %
+${voffset 2}${color}${font Open Sans Light:pixelsize=10}${color}${top_mem name 5}${color1}${alignr +10}${top_mem mem_res 5}${color2}${alignr}${top_mem mem 5}${color1} %
+
+${image ~/.harmattan-assets/misc/Ciliora-Secunda/God-Mode/pressure.png -p 180,100 -s 16x16}\
+${image ~/.harmattan-assets/misc/Ciliora-Secunda/God-Mode/humidity.png -p 180,121 -s 16x16}\
+${image ~/.harmattan-assets/misc/Ciliora-Secunda/God-Mode/wind-2.png -p 180,143 -s 16x16}\
+${execi 300 cp -f ~/.harmattan-assets/icons/#fff__32/$(jq .list[0].weather[0].id ~/.cache/forecast.json).png ~/.cache/weather-1.png}${image ~/.cache/weather-1.png -p 8,217 -s 32x32}\
+${execi 300 cp -f ~/.harmattan-assets/icons/#fff__32/$(jq .list[1].weather[0].id ~/.cache/forecast.json).png ~/.cache/weather-2.png}${image ~/.cache/weather-2.png -p 85,217 -s 32x32}\
+${execi 300 cp -f ~/.harmattan-assets/icons/#fff__32/$(jq .list[2].weather[0].id ~/.cache/forecast.json).png ~/.cache/weather-3.png}${image ~/.cache/weather-3.png -p 160,217 -s 32x32}${font}${voffset -120}\
