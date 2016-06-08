@@ -152,7 +152,7 @@ ${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 2: ${color1}${alignc
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 3: ${color1}${alignc}${freq_g 2} ${color1}Ghz ${color2}${alignr}${cpu cpu2}${color1}%
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 4: ${color1}${alignc}${freq_g 3} ${color1}Ghz ${color2}${alignr}${cpu cpu3}${color1}%
 ${voffset 5}${alignc}${cpubar 10,180 FF8800 FF8800 -l}
-${voffset 5}${color}${font Open Sans Light:pixelsize=10}CPU TEMP: ${color1}${alignr}${hwmon temp 1}°C
+${voffset 5}${color}${font Open Sans Light:pixelsize=10}CPU TEMP: ${color1}${alignr}${hwmon 1 temp 1}°C
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}RAM: ${color3}${alignr}${mem}
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}TOTAL: ${color3}${alignr}${memmax}
 ${voffset 5}${alignc}${membar 10,180 FF8800 FF8800 -l}
