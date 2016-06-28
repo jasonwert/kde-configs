@@ -125,7 +125,7 @@ ${color1}${alignr 32}${voffset 7}${execi 300 jq -r .wind.speed ~/.cache/weather.
 \
 
 ${voffset -170}${font Droid Sans Mono :size=32}${alignc}${color}${time %I:%M}${font}${color}
-${voffset 4}${font Droid Sans :size=18}${alignc}${color3}${execi 300 LANG=en_US.UTF-8 LC_TIME=en_US.UTF-8 date +"%a %B %-d, %Y"}${font}${color}
+${voffset 4}${font Droid Sans :size=18}${alignc}${color3}${execi 300 LANG=en_US.UTF-8 LC_TIME=en_US.UTF-8 date +"%a %B %-d"}${font}${color}
 ${color7}${hr}${color}
 ${font Open Sans Light:size=15}Weather ${color}
 \
@@ -152,7 +152,7 @@ ${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 2: ${color1}${alignc
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 3: ${color1}${alignc}${freq_g 2} ${color1}Ghz ${color2}${alignr}${cpu cpu2}${color1}%
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 4: ${color1}${alignc}${freq_g 3} ${color1}Ghz ${color2}${alignr}${cpu cpu3}${color1}%
 ${voffset 5}${alignc}${cpubar 10,180 FF8800 FF8800 -l}
-${voffset 5}${color}${font Open Sans Light:pixelsize=10}CPU TEMP: ${color1}${alignr}${hwmon 1 temp 1}°C
+${voffset 5}${color}${font Open Sans Light:pixelsize=10}CPU TEMP: ${color1}${alignr}${hwmon 0 temp 1}°C
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}RAM: ${color3}${alignr}${mem}
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}TOTAL: ${color3}${alignr}${memmax}
 ${voffset 5}${alignc}${membar 10,180 FF8800 FF8800 -l}
