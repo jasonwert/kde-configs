@@ -125,7 +125,7 @@ ${color1}${alignr 32}${voffset 7}${execi 300 jq -r .wind.speed ~/.cache/weather.
 \
 
 ${voffset -170}${font Droid Sans Mono :size=32}${alignc}${color}${time %I:%M}${font}${color}
-${voffset 4}${font Droid Sans :size=18}${alignc}${color3}${execi 300 LANG=en_US.UTF-8 LC_TIME=en_US.UTF-8 date +"%a %B %-d"}${font}${color}
+${voffset 4}${font Droid Sans :size=18}${alignc}${color3}${execi 300 LANG=en_US.UTF-8 LC_TIME=en_US.UTF-8 date +"%a %b %-d"}${font}${color}
 ${color7}${hr}${color}
 ${font Open Sans Light:size=15}Weather ${color}
 \
