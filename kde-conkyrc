@@ -144,7 +144,7 @@ ${font Open Sans Light:size=15}Storage
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}/: ${color1}${alignc}${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}HOME: ${color1}${alignc}${fs_used /home} / ${fs_size /home} $alignr ${fs_used_perc /home}%
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}Home2: ${color1}${alignc}${fs_used /media/home2} / ${fs_size /media/home2} $alignr ${fs_used_perc /media/home2}%
-#${color}${font Open Sans Light:pixelsize=10}UNRAID: ${color1}${alignc}${fs_used /media/jasonwert/} / ${fs_size /media/jasonwert/} $alignr ${fs_used_perc /media/jasonwert/}%
+${color}${font Open Sans Light:pixelsize=10}UNRAID: ${color1}${alignc}${fs_used /media/unraid/} / ${fs_size /media/unraid/} $alignr ${fs_used_perc /media/unraid/}%
 ${color7}${hr}${color}
 ${font Open Sans Light:size=15}CPUs/Memory
 ${voffset 2}${color}${font Open Sans Light:pixelsize=10}CPU 1: ${color1}${alignc}${freq_g 0} ${color1}Ghz ${color2}${alignr}${cpu cpu0}${color1}%
